@@ -1,0 +1,24 @@
+environment: staging
+fullnameOverride: test-hugo-app-test-frontend-cnp-generic-app
+image:
+  repository: ghcr.io/3-istor/app-test/frontend
+  tag: latest
+replicaCount: 1
+secrets:
+  vaultPath: project-test-hugo/app-test/staging
+  vaultRole: test-hugo-app-test-staging-role
+db:
+  instances: 1
+  backup:
+    enabled: false
+offhours:
+  enabled: true
+  sleepAt: 0 19 * * 1-5
+  wakeAt: 0 8 * * 1-5
+  timezone: Europe/Paris
+ingress:
+  hostname: app-test-test-hugo-staging.3istor.com
+  oidc:
+    clientID: cnp-test-hugo-app-test-stg
+auth:
+  clientId: cnp-test-hugo-app-test-stg
