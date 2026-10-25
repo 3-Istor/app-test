@@ -1,36 +1,28 @@
 # deploy/values-backend.yaml
 replicaCount: 1
-
 image:
   repository: ghcr.io/3-istor/app-test/backend
   tag: "1.0.0"
-
 service:
   enabled: true
   type: ClusterIP
   ports:
-    - name: http
-      port: 8000
-      targetPort: 8000
-
+  - name: http
+    port: 8000
+    targetPort: 8000
 project_name: "test-hugo"
 app_name: "app-test"
-
 secrets:
   enabled: true
   vaultPath: "project-test-hugo/app-test"
   vaultRole: "test-hugo-app-test-role"
-
 imagePullSecrets:
-  - name: app-registry
-
+- name: app-registry
 ingress:
   enabled: false
-
 auth:
   realm: "test-hugo"
   clientId: "cnp-test-hugo-app-test"
-
 resources:
   requests:
     cpu: "50m"
@@ -38,24 +30,20 @@ resources:
   limits:
     cpu: "500m"
     memory: "256Mi"
-
 db:
   enabled: true
   name: app-test
   storage: "1Gi"
   storageClass: "local-path"
-
 # The image creates no tables itself (CNP migration standard v1): the platform
 # runs its migration entrypoint as a Job once the database is Ready and before
 # each new version starts. A failed migration keeps the running version.
 migrations:
   enabled: true
   command: ["/app/migrate"]
-
 monitoring:
   enabled: true
   path: "/health"
-
 offhours:
   enabled: true
   sleepAt: "0 1 * * *"
