@@ -1,3 +1,3 @@
 image:
   repository: ghcr.io/3-istor/app-test/backend
-  tag: 1.0.0-rc.2@sha256:e5039240b6cbc9c2878171e9c4cd600dc45e50623d91df9e57adc11543618a20
+  tag: 1.0.0-rc.1@sha256:63a8e32ee95b7a86e06f0652359ac99f0ddac5ff95e2dd5f7d49f9ed873cf03b
