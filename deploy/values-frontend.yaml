@@ -1,33 +1,26 @@
 # deploy/values-frontend.yaml
 replicaCount: 1
-
 image:
   repository: ghcr.io/3-istor/app-test/frontend
   tag: "1.0.0"
-
 service:
   enabled: true
   type: ClusterIP
   ports:
-    - name: http
-      port: 80
-      targetPort: 3001
-
+  - name: http
+    port: 80
+    targetPort: 3001
 secrets:
   enabled: true
   vaultPath: "project-test-hugo/app-test"
   vaultRole: "test-hugo-app-test-role"
-
 env:
-  - name: BACKEND_HOST
-    value: "http://test-hugo-app-test-backend-cnp-generic-app:8000"
-
+- name: BACKEND_HOST
+  value: "http://test-hugo-app-test-backend-cnp-generic-app:8000"
 imagePullSecrets:
-  - name: app-registry
-
+- name: app-registry
 project_name: "test-hugo"
 app_name: "app-test"
-
 routes:
   app-test:
     auth:
@@ -36,7 +29,6 @@ routes:
       vault:
         path: "kvv2/projects/test-hugo/app-test/envoy-auth"
         role: "test-hugo-app-test-role"
-
 ingress:
   enabled: true
   hostname: "app-test-test-hugo.3istor.com"
@@ -51,11 +43,9 @@ ingress:
   gateway:
     name: "test-hugo-gateway"
     namespace: "test-hugo-system"
-
 auth:
   realm: "test-hugo"
   clientId: "cnp-test-hugo-app-test"
-
 resources:
   requests:
     cpu: "50m"
@@ -63,18 +53,15 @@ resources:
   limits:
     cpu: "250m"
     memory: "256Mi"
-
 release:
   # rolling | canary. Switch from the CMP Release tab, or here.
   strategy: rolling
   preset: safe
   smoke:
     path: "/"
-
 monitoring:
   enabled: true
   path: "/"
-
 offhours:
   enabled: true
   sleepAt: "0 1 * * *"
