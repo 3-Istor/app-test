@@ -200,3 +200,5 @@ pytest
 Oui. Un fichier de contexte dédié existe pour guider un LLM ou un assistant de code : [ai-context.md](ai-context.md).
 
 Ce fichier explique comment ajouter une route, une entité, des schémas, des dépendances ou des validations sans casser les conventions du template. Si vous modifiez le backend avec une IA, faites lire ce fichier en premier.
+
+<!-- Test du scan CI de sécurité (CNP-117), 25/10/2026 -->
