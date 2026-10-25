@@ -7,9 +7,9 @@ service:
   enabled: true
   type: ClusterIP
   ports:
-  - name: http
-    port: 8000
-    targetPort: 8000
+    - name: http
+      port: 8000
+      targetPort: 8000
 project_name: "test-hugo"
 app_name: "app-test"
 secrets:
@@ -17,7 +17,7 @@ secrets:
   vaultPath: "project-test-hugo/app-test"
   vaultRole: "test-hugo-app-test-role"
 imagePullSecrets:
-- name: app-registry
+  - name: app-registry
 ingress:
   enabled: false
 auth:
@@ -38,6 +38,8 @@ db:
 # The image creates no tables itself (CNP migration standard v1): the platform
 # runs its migration entrypoint as a Job once the database is Ready and before
 # each new version starts. A failed migration keeps the running version.
+  backup:
+    enabled: true
 migrations:
   enabled: true
   command: ["/app/migrate"]
