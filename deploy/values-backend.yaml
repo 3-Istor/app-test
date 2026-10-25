@@ -40,6 +40,11 @@ db:
 # each new version starts. A failed migration keeps the running version.
   backup:
     enabled: true
+  restore:
+    generation: 1
+    sourceServer: test-hugo-app-test-backend-db
+    backupID: 20261025T164243
+    targetTime: ''
 migrations:
   enabled: true
   command: ["/app/migrate"]
