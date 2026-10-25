@@ -2,7 +2,7 @@ environment: staging
 fullnameOverride: test-hugo-app-test-backend-cnp-generic-app
 image:
   repository: ghcr.io/3-istor/app-test/backend
-  tag: latest
+  tag: 1.0.0-rc.1
 replicaCount: 1
 secrets:
   vaultPath: project-test-hugo/app-test/staging
