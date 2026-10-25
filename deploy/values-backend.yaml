@@ -2,8 +2,7 @@
 replicaCount: 1
 
 image:
-  # Points to the backend Docker image
-  repository: ghcr.io/3-istor/template-app-webapp-python-fastapi-react/backend
+  repository: ghcr.io/3-istor/app-test/backend
   tag: "latest"
 
 service:
@@ -14,29 +13,51 @@ service:
       port: 8000
       targetPort: 8000
 
-# The backend connects to the DB and needs Vault secrets
+project_name: "test-hugo"
+app_name: "app-test"
+
 secrets:
   enabled: true
-  vaultPath: "kvv2/projects/sandbox/app-fastapi-react"
+  vaultPath: "project-test-hugo/app-test"
+  vaultRole: "test-hugo-app-test-role"
 
 imagePullSecrets:
   - name: app-registry
 
+ingress:
+  enabled: false
+
+auth:
+  realm: "test-hugo"
+  clientId: "cnp-test-hugo-app-test"
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+
 db:
   enabled: true
-  name: "app_fastapi_react"
+  name: app-test
   storage: "1Gi"
+  storageClass: "local-path"
 
-# The platform runs backend/migrate (alembic upgrade head) as a Job once the
-# database is Ready and before each new version starts.
+# The image creates no tables itself (CNP migration standard v1): the platform
+# runs its migration entrypoint as a Job once the database is Ready and before
+# each new version starts. A failed migration keeps the running version.
 migrations:
   enabled: true
   command: ["/app/migrate"]
 
-resources:
-  requests:
-    cpu: "100m"
-    memory: "128Mi"
-  limits:
-    cpu: "500m"
-    memory: "512Mi"
+monitoring:
+  enabled: true
+  path: "/health"
+
+offhours:
+  enabled: true
+  sleepAt: "0 1 * * *"
+  wakeAt: "0 7 * * *"
+  timezone: "Europe/Paris"
